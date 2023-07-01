@@ -18,6 +18,16 @@ class Sidebar {
    * при нажатии на кнопку .sidebar-toggle
    * */
   static initToggleButton() {
+    const sidebarOpen = () => {
+      if ([...document.querySelector('body').classList].includes('sidebar-open') === true){
+        document.querySelector('body').classList.remove('sidebar-open')
+        document.querySelector('body').classList.remove('sidebar-collapse')
+      } else {
+        document.querySelector('body').classList.add('sidebar-open')
+        document.querySelector('body').classList.add('sidebar-collapse')
+      }
+    }
+    document.querySelector('.sidebar-toggle').addEventListener('click', sidebarOpen)
 
   }
 
@@ -29,6 +39,6 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
-
-  }
+  
+}
 }
