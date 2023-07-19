@@ -19,13 +19,10 @@ class Sidebar {
    * */
   static initToggleButton() {
     const sidebarOpen = () => {
-      if ([...document.querySelector('body').classList].includes('sidebar-open') === true){
-        document.querySelector('body').classList.remove('sidebar-open')
-        document.querySelector('body').classList.remove('sidebar-collapse')
-      } else {
-        document.querySelector('body').classList.add('sidebar-open')
-        document.querySelector('body').classList.add('sidebar-collapse')
-      }
+
+      document.querySelector('body').classList.toggle('sidebar-open')
+      document.querySelector('body').classList.toggle('sidebar-collapse')
+
     }
     document.querySelector('.sidebar-toggle').addEventListener('click', sidebarOpen)
 

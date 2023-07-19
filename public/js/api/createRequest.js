@@ -2,54 +2,42 @@
  * Основная функция для совершения запросов
  * на сервер.
  * */
-const createRequest = (options = {}) => { // как тут написать пинимаемые значения?
+const createRequest = (options = {url, data = {}, method}) => { 
     const xhr = new XMLHttpRequest,
     formData = new FormData;
     xhr.responseType = 'json';
+    let url =  options.url;
     
-    if ('тут нужно написать, если(запрос GET, то выполняем то что ниже)') {
-        const funcun =() => {
+    if (options.method === GET) {
+     
+        url = `${url}?mail=${options.data.mail}&password=${options.data.password}`
 
-            if(xhr.readyState === xhr.DONE) {
-                callback(xhr.response ) 
-                
-            } else {
-                callback(err)
-            }
-    
-        }
-        
-
-        xhr.open( 'GET', 'https://example.com?mail=ivan@biz.pro&password=odinodin' ); // тут в ссылке mail и password, берутся значения которые принимаютсяcreateRequest?
+        xhr.open( 'GET', url );
         xhr.send();
 
-        xhr.addEventListener('readystatechange', funcun)
 
+    } else { 
 
-    } else { //'тут соответственно если не GET
+        for( key in options.data) {
+            formData.append(key, options.data[key])
+          }
 
-        const funcun =() => {
-
-            if(xhr.readyState === xhr.DONE) {
-                callback(xhr.response ) 
-                
-            } else {
-                callback(err)
-            }
-    
-        }
-
-
-
-        formData.append( 'mail', 'ivan@biz.pro' ); // тут в ссылке mail и password, берутся значения которые принимаютсяcreateRequest?
-        formData.append( 'password', 'odinodin' );
-
-        xhr.open( 'POST', 'https://example.com' );
+        xhr.open( method, url);
         xhr.send( formData );
 
-        xhr.addEventListener('readystatechange', funcun)
+     };
+
+     const funcun =() => {
+
+        if (xhr.status != 200) {
+            callback(err);
+            console.log(xhr.status, xhr.responseText);
+          } else {
+            callback(null, xhr.response);
+          }
     }
 
-  
 
-};
+     xhr.addEventListener('load', funcun);
+
+}
